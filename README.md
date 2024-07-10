@@ -22,8 +22,15 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+<!-- Variables -->
+[contributors-shield]: https://img.shields.io/github/contributors/sfsdfd62/TrioFold.svg?style=for-the-badge
+[contributors-url]: https://github.com/sfsdfd62/TrioFold/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/sfsdfd62/TrioFold.svg?style=for-the-badge
+[forks-url]: https://github.com/sfsdfd62/TrioFold/network/members
+[stars-shield]: https://img.shields.io/github/stars/sfsdfd62/TrioFold.svg?style=for-the-badge
+[stars-url]: https://github.com/sfsdfd62/TrioFold/stargazers
+[issues-shield]: https://img.shields.io/github/issues/sfsdfd62/TrioFold.svg?style=for-the-badge
+[issues-url]: https://github.com/sfsdfd62/TrioFold/issues
 
 <!-- PROJECT LOGO -->
 <br />
