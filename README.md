@@ -46,18 +46,9 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About TrioFOld
+## About TrioFold
 
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+The prediction of RNA secondary structure (RSS) is a fundamental but unmet need for RNA research. Various deep learning (DL)--based state-of-the-art (SOTA) methods achieved improved accuracy over thermodynamic-based methods. However, the over-parameterization nature of DL makes SOTA methods prone to overfitting and thus limits their generalizability. Meanwhile, the inconsistency of RSS predictions between SOTA methods further aggravated the crisis of generalizability. Here, we propose TrioFold to achieve enhanced generalizability of RSS prediction by integrating base-pairing clues learned from both thermodynamic- and DL-based methods by ensemble learning and convolutional block attention mechanism. TrioFold achieves higher accuracy in intra-family predictions and enhanced generalizability in inter-families and cross-RNA-types predictions. Importantly, TrioFold uses only ~2800 parameters to achieve superior performance over SOTA DL methods requiring millions of parameters. This study demonstrated new opportunities to enhance generalizability for RSS predictions by efficiently ensemble learning of base-pairing clues learned from both thermodynamic- and DL-based algorithms. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
