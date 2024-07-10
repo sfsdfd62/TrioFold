@@ -36,7 +36,7 @@
 <br />
 <div align="center">
 
-  <h3 align="center">TrioFold</h3>
+  <h1 align="center">TrioFold</h1>
 
   <p align="center">
    Enhanced generalizability of RNA secondary structure prediction via convolutional block attention network and ensemble learning
