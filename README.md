@@ -70,14 +70,13 @@ Moreover, we implemented TriFold and those base-learner methods in a one-stop us
 <!-- Prerequisites -->
 ## Prerequisites
 
-Before you begin, ensure you have met the following requirements:
-Python
-PyTorch
-Subprocess
-collections
-numpy
+Before you begin, ensure you have met the following requirements:  
+Python >= 3.10  
+PyTorch  >= 1.11  
+Subprocess  
+collections  
+numpy  >= 1.23.5  
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
