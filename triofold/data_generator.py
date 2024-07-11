@@ -38,15 +38,14 @@ class RNASSDataGenerator(object):
         if self.upsampling:
             self.data = self.upsampling_data_new()
         
-        self.data_x = np.array([instance[0] for instance in self.data])#RNA AUCG的one-hot coding
-        self.data_y = np.array([instance[1] for instance in self.data])#RNA dot-bracket形式的[[0,1,0],[1,0,0]]形如此类的互补配对形式。
-        self.pairs = np.array([instance[4] for instance in self.data])#互补配对的 pairs=[[0, 16], [1, 15], [2, 14]]
-        #pdb.set_trace()
-        self.seq_length = np.array([instance[2] for instance in self.data])#序列的具体长度
-        self.len = len(self.data)#有几条序列
+        self.data_x = np.array([instance[0] for instance in self.data])
+        self.data_y = np.array([instance[1] for instance in self.data])
+        self.pairs = np.array([instance[4] for instance in self.data])
+        self.seq_length = np.array([instance[2] for instance in self.data])
+        self.len = len(self.data)
         self.seq = list(p.map(encoding2seq, self.data_x))
-        self.seq_max_len = 608 #最大的长度，608。
-        self.data_name = np.array([instance[3] for instance in self.data])#文件的名字
+        self.seq_max_len = 608 
+        self.data_name = np.array([instance[3] for instance in self.data])
         self.linearfold = np.array([instance[5] for instance in self.data])
         self.RNAfold = np.array([instance[6] for instance in self.data])
         self.mxfold2 = np.array([instance[7] for instance in self.data])
@@ -515,33 +514,16 @@ class Dataset_Cut_concat_new_merge(data.Dataset):
         data_nc = data_nc.sum(axis=0).astype(np.bool)
         return contact[:l, :l], data_fcn_2, matrix_rep, data_len, data_seq[:l], data_name,data_nc,l
 
-#这里的data_list是下面这个东西
-'''
-RNA_SS_data(seq=array([[0., 0., 0., 1.],
-       [0., 0., 0., 1.],
-       [0., 0., 0., 1.],
-       ...,
-       [0., 0., 0., 0.],
-       [0., 0., 0., 0.],
-       [0., 0., 0., 0.]]), ss_label=array([[0, 1, 0],
-       [0, 1, 0],
-       [0, 1, 0],
-       ...,
-       [1, 0, 0],
-       [1, 0, 0],
-       [1, 0, 0]]), length=64, name='URS0000D68B16_425104_1-64.bpseq', pairs=[[0, 16], [1, 15], [2, 14], [3, 13], [13, 3], [14, 2], [15, 1], [16, 0], [28, 49], [29, 48], [30, 47], [31, 46], [46, 31], [47, 30], [48, 29], [49, 28]])
-下面这个类的输入就是ufold_train里面的
 
-'''
-class Dataset_Cut_concat_new_merge_multi(data.Dataset):#！！！！RNA！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！所使用的RNA数据处理工具，定义dataset类
+class Dataset_Cut_concat_new_merge_multi(data.Dataset):
   'Characterizes a dataset for PyTorch'
   def __init__(self, data_list):
         'Initialization'
         self.data2 = data_list[0]
         if len(data_list) > 1:
-            self.data = self.merge_data(data_list)#如果是只有一个cPickle文件的话，是不需要这里的。
+            self.data = self.merge_data(data_list)
         else:
-            self.data = self.data2#只有一个pickle文件的话，看这里
+            self.data = self.data2#
 
   def __len__(self):
         'Denotes the total number of samples'
@@ -567,7 +549,7 @@ class Dataset_Cut_concat_new_merge_multi(data.Dataset):#！！！！RNA！！！
         'Generates one sample of data'
         # Select sample
         contact, data_seq, matrix_rep, data_len, data_name, linearfold, rnafold, mxfold, contextfold, contrafold, mfold ,eternafold,spot,ufold= self.data.get_one_sample(index)
-        #data_seq是padding过后的AUCG的独热编码，data_name是文件名字,data_len是具体的序列长度。contact是padding过的contactmap，并且是一个对称的矩阵。matrix_rep是与contact map形状一样的一个全零矩阵。
+        
         l = get_cut_len(data_len,80)
         ensemble_list = [linearfold,rnafold,mxfold,contextfold,contrafold,mfold,eternafold,spot,ufold]
         ensemble = np.zeros((9, l, l))
@@ -575,10 +557,10 @@ class Dataset_Cut_concat_new_merge_multi(data.Dataset):#！！！！RNA！！！
         if l >= 500:
             contact_adj = np.zeros((l, l))
             contact_adj[:data_len, :data_len] = contact[:data_len, :data_len]
-            contact = contact_adj#contact map在这一步变得有padding
+            contact = contact_adj
             seq_adj = np.zeros((l, 4))
             seq_adj[:data_len] = data_seq[:data_len]
-            data_seq = seq_adj#data_seq在这一步变得有padding
+            data_seq = seq_adj
         n = 0
         for i in ensemble_list:
           ensemble[n,:l,:l] = i[:l,:l]
@@ -591,7 +573,6 @@ class Dataset_Cut_concat_new_merge_multi(data.Dataset):#！！！！RNA！！！
         #return contact[:l, :l], data_fcn, data_fcn, matrix_rep, data_len, data_seq[:l], data_name
         return contact[:l, :l], ensemble, matrix_rep, data_len, data_seq[:l], data_name
         #return contact[:l, :l], data_fcn_2, data_fcn_1, matrix_rep, data_len, data_seq[:l], data_name
-        #这里的matrix_rep是以输入序列的最大长度padding过后的全0矩阵
 
 class Dataset_Cut_concat_new_merge_two(data.Dataset):
   'Characterizes a dataset for PyTorch'
@@ -668,10 +649,10 @@ class Dataset_Cut_concat_new_canonicle(data.Dataset):
         if l >= 500:
             contact_adj = np.zeros((l, l))
             contact_adj[:data_len, :data_len] = contact[:data_len, :data_len]
-            contact = contact_adj#contact map在这一步变得有padding
+            contact = contact_adj
             seq_adj = np.zeros((l, 4))
             seq_adj[:data_len] = data_seq[:data_len]
-            data_seq = seq_adj#data_seq在这一步变得有padding
+            data_seq = seq_adj
         n = 0
         for i in ensemble_list:
           ensemble[n,:l,:l] = i[:l,:l]
@@ -745,10 +726,10 @@ class Dataset_one(data.Dataset):
         if l >= 500:
             contact_adj = np.zeros((l, l))
             contact_adj[:data_len, :data_len] = contact[:data_len, :data_len]
-            contact = contact_adj#contact map在这一步变得有padding
+            contact = contact_adj
             seq_adj = np.zeros((l, 4))
             seq_adj[:data_len] = data_seq[:data_len]
-            data_seq = seq_adj#data_seq在这一步变得有padding
+            data_seq = seq_adj
         for n, cord in enumerate(perm_nc):
             i, j = cord
             data_nc[n, :data_len, :data_len] = np.matmul(data_seq[:data_len, i].reshape(-1, 1), data_seq[:data_len, j].reshape(1, -1))
@@ -762,15 +743,15 @@ class Dataset_one(data.Dataset):
 
 
 
-class Dataset_less_CBAM(data.Dataset):#！！！！RNA！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！所使用的RNA数据处理工具，定义dataset类
+class Dataset_less_CBAM(data.Dataset):
   'Characterizes a dataset for PyTorch'
   def __init__(self, data_list):
         'Initialization'
         self.data2 = data_list[0]
         if len(data_list) > 1:
-            self.data = self.merge_data(data_list)#如果是只有一个cPickle文件的话，是不需要这里的。
+            self.data = self.merge_data(data_list)
         else:
-            self.data = self.data2#只有一个pickle文件的话，看这里
+            self.data = self.data2
 
   def __len__(self):
         'Denotes the total number of samples'
@@ -796,7 +777,7 @@ class Dataset_less_CBAM(data.Dataset):#！！！！RNA！！！！！！！！�
         'Generates one sample of data'
         # Select sample
         contact, data_seq, matrix_rep, data_len, data_name, linearfold, rnafold, mxfold, contextfold, contrafold, mfold ,eternafold,spot,ufold= self.data.get_one_sample(index)
-        #data_seq是padding过后的AUCG的独热编码，data_name是文件名字,data_len是具体的序列长度。contact是padding过的contactmap，并且是一个对称的矩阵。matrix_rep是与contact map形状一样的一个全零矩阵。
+
         l = get_cut_len(data_len,80)
         ensemble_list = [mxfold,contextfold,spot,ufold]
         ensemble = np.zeros((4, l, l))
@@ -804,10 +785,10 @@ class Dataset_less_CBAM(data.Dataset):#！！！！RNA！！！！！！！！�
         if l >= 500:
             contact_adj = np.zeros((l, l))
             contact_adj[:data_len, :data_len] = contact[:data_len, :data_len]
-            contact = contact_adj#contact map在这一步变得有padding
+            contact = contact_adj
             seq_adj = np.zeros((l, 4))
             seq_adj[:data_len] = data_seq[:data_len]
-            data_seq = seq_adj#data_seq在这一步变得有padding
+            data_seq = seq_adj
         n = 0
         for i in ensemble_list:
           ensemble[n,:l,:l] = i[:l,:l]
@@ -820,7 +801,7 @@ class Dataset_less_CBAM(data.Dataset):#！！！！RNA！！！！！！！！�
         #return contact[:l, :l], data_fcn, data_fcn, matrix_rep, data_len, data_seq[:l], data_name
         return contact[:l, :l], ensemble, matrix_rep, data_len, data_seq[:l], data_name
         #return contact[:l, :l], data_fcn_2, data_fcn_1, matrix_rep, data_len, data_seq[:l], data_name
-        #这里的matrix_rep是以输入序列的最大长度padding过后的全0矩阵
+        
 
         
 def get_cut_len(data_len,set_len):
