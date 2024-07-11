@@ -10,7 +10,7 @@ from torchsummary import summary
 from Network import CBAMBlock as FCNNet
 
 from triofold.utils import *
-from triofold.config import process_config
+
 import pdb
 import time
 from triofold.data_generator import RNASSDataGenerator
@@ -244,7 +244,7 @@ def main():
     #summary(contact_net, input_size=[(9,256,256)], batch_size=4, device="cpu")
     #print(a)
     for i in range(10,11):
-      MODEL_SAVED= '/model/TrioFold.pt'
+      MODEL_SAVED= './model/TrioFold.pt'
     #pdb.set_trace()
 
       contact_net.load_state_dict(torch.load(MODEL_SAVED,map_location='cuda:1'))
