@@ -236,7 +236,7 @@ def model_eval_all_test(contact_net,test_generator):
 
 def main():
     device  = 'cuda:1'
-    test_data = RNASSDataGenerator('/home/linhb/CBAM/data/','bpRNAnew.cPickle')
+    test_data = RNASSDataGenerator('./data/','bpRNAnew.cPickle')
     test_set = Dataset_one(test_data)
     test_generator = data.DataLoader(test_set)
     contact_net = FCNNet(channel = 9,reduction = 8)
