@@ -57,15 +57,6 @@ Here, we propose TrioFold to achieve enhanced generalizability of RSS prediction
 <img src="img/architecture.png" alt="Logo">
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- WEBSERVER -->
-## Webserver
-
-Moreover, we implemented TriFold and those base-learner methods in a one-stop user-friendly webserver to enable convenient usage for biologists without any programming requirement. The webserver provides RSS prediction and analysis functions and it can be freely accessed at [http://triofold.aiddlab.com/](http://triofold.aiddlab.com/).
-<p align="center">
-<img src="img/webserver.png" alt="Logo" width=600>
-</p>
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <!-- Prerequisites -->
 ## Prerequisites
@@ -77,6 +68,36 @@ Subprocess
 collections  
 numpy  >= 1.23.5  
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- Usage -->
+## Usage
+
+We provide a script for testing and evaluating the prediction result. By running the following code, you will obtain results consistent with those reported in the paper. After installation, please download dataset files from [Zenodo](https://zenodo.org/records/12714014), and put them into the /data/ folder, and change the file name in the script.  
+  
+`test_data = RNASSDataGenerator('/data/','bpRNAnew.cPickle')`  
+  
+After the above procedure, just simply run   
+  
+`python TrioFold.py`  
+  
+You are expected to get the same results as we present in the paper.  
+However, due to copyright issues, we are unable to provide the installation program and steps for the base learners here. If you need prediction services, we strongly recommend using our webserver.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+
+<!-- WEBSERVER -->
+## Webserver
+
+Moreover, we implemented TriFold and those base-learner methods in a one-stop user-friendly webserver to enable convenient usage for biologists without any programming requirement. The webserver provides RSS prediction and analysis functions and it can be freely accessed at [http://triofold.aiddlab.com/](http://triofold.aiddlab.com/).
+<p align="center">
+<img src="img/webserver.png" alt="Logo" width=600>
+</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 <!-- LICENSE -->
 ## License
