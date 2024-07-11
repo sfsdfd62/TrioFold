@@ -70,6 +70,16 @@ numpy  >= 1.23.5
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+<!-- Installation -->
+## Installation
+
+1. Clone the whole repository.
+`git clone https://github.com/sfsdfd62/TrioFold.git`
+2. Activate the conda environment.
+`conda activate TrioFold`
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 
 <!-- Usage -->
 ## Usage
