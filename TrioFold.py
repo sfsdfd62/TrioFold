@@ -8,22 +8,21 @@ from torch.utils import data
 from torchsummary import summary
 # from FCN import FCNNet
 from Network import CBAMBlock as FCNNet
-#from Network3 import U_Net_FP as FCNNet
 
-from ufold.utils import *
-from ufold.config import process_config
+from triofold.utils import *
+from triofold.config import process_config
 import pdb
 import time
-from ufold.data_generator import RNASSDataGenerator
+from triofold.data_generator import RNASSDataGenerator
 torch.set_printoptions(threshold=np.inf)
 import collections
 import warnings
 warnings.filterwarnings("ignore")
-#要测试哪一个模型需要去ufold/datagenerator/ 里的dataset_one里面修改
+
 perm_nc = [[0, 0], [0, 2], [0, 3], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2], [3, 0], [3, 3]]
 args = get_args()
-#from ufold.postprocess import postprocess_new_nc as postprocess
-from ufold.postprocess import postprocess_new as postprocess
+
+from triofold.postprocess import postprocess_new as postprocess
 from torchsummary import summary
 
 def count_parameters(model):
@@ -70,7 +69,7 @@ def get_ct_dict_fast(predict_matrix,batch_num,ct_dict,dot_file_dict,seq_embeddin
     seq_letter=''.join([letter[item] for item in np.nonzero(seq_embedding)[:,1]])
     dot_file_dict[batch_num] = [(seq_name,seq_letter,dot_list[:len(seq_letter)])]
     return ct_dict,dot_file_dict
-# randomly select one sample from the test set and perform the evaluation
+
 
 
 class Dataset_one(data.Dataset):
@@ -102,16 +101,14 @@ class Dataset_one(data.Dataset):
         if l >= 500:
             contact_adj = np.zeros((l, l))
             contact_adj[:data_len, :data_len] = contact[:data_len, :data_len]
-            contact = contact_adj#contact map在这一步变得有padding
+            contact = contact_adj
             seq_adj = np.zeros((l, 4))
             seq_adj[:data_len] = data_seq[:data_len]
-            data_seq = seq_adj#data_seq在这一步变得有padding
+            data_seq = seq_adj
         for n, cord in enumerate(perm_nc):
             i, j = cord
             data_nc[n, :data_len, :data_len] = np.matmul(data_seq[:data_len, i].reshape(-1, 1), data_seq[:data_len, j].reshape(1, -1))
         data_nc = data_nc.sum(axis=0).astype(np.bool)
-        #average = (contextfold+mxfold)/2
-        #ensemble[:l,:l] = average[:l,:l]
 
         return contact[:l, :l], ensemble, matrix_rep, data_len, data_seq[:l], data_name, data_nc,l
 
@@ -139,18 +136,10 @@ def model_eval_all_test(contact_net,test_generator):
     
 
     predictor = 'CBAM'
-    with open('/home/linhb/SENet/figs/cross_family/'+'ensemble'+'_cross.txt') as f_fam:
-        fam_info = f_fam.readlines()
-        fam_info = [fam_[:-1]+'.bpseq' for fam_ in fam_info]
         
     #for contacts, seq_embeddings, matrix_reps, seq_lens, seq_ori, seq_name in test_generator:
     for contacts, seq_embeddings, matrix_reps, seq_lens, seq_ori, seq_name, nc_map, l_len in test_generator:
-    #for contacts, seq_embeddings, matrix_reps, seq_lens, seq_ori, seq_name in test_merge_generator:
-    #for contacts, seq_embeddings,seq_embeddings_1, matrix_reps, seq_lens, seq_ori, seq_name in test_generator:
-        #pdb.set_trace()
-        #print(seq_name)
         nc_map_nc = nc_map.float() * contacts
-        print(seq_name)
         
         #if batch_n > 3:
         batch_n += 1
@@ -236,41 +225,14 @@ def model_eval_all_test(contact_net,test_generator):
             #    print(result_nc_tmp[0])
     #pdb.set_trace()
     #print(np.mean(run_time))
-    for i in dot_file_dict.values():
-      print('>'+i[0][0].split('.bpseq')[0])
-      print(i[0][1])
-      print(i[0][2])
     #dot_ct_file = open('results/dot_ct_file.txt','w')
     nt_exact_p,nt_exact_r,nt_exact_f1,accuracy,specificity, fpr, fnr = zip(*result_no_train)
     #pdb.set_trace()
-    f1_ = list(str(float(i)) for i in list(nt_exact_f1))
-    for jjjj in f1_:
-        print(jjjj)
-    
-    #nt_exact_p_1,nt_exact_r_1,nt_exact_f1_1,accuracy_1 = zip(*result_no_train_fam)
-    #f1_fam = list(str(float(i)) for i in list(nt_exact_f1_1))
-    np.save('fig/CBAM_AUC.npy', pred_AUC)
-    np.save('fig/CBAM_AUC_true.npy', true_AUC)
 
-
-    print('Average testing specificity with pure post-processing: ', np.average(specificity))
-    print('Average testing accuracy with pure post-processing: ', np.average(accuracy))
-    
-    print('Average testing fpr with pure post-processing: ', np.average(fpr))
-    print('Average testing fnr with pure post-processing: ', np.average(fnr))
     print('Average testing precision with pure post-processing: ', np.average(nt_exact_p))
     print('Average testing recall with pure post-processing: ', np.average(nt_exact_r))
     print('Average testing F1 score with pure post-processing: ', np.average(nt_exact_f1))
-    print('Median: ', np.median(nt_exact_f1))
 
-    
-    #with open('/home/linhb/SENet/figs/'+predictor+'_f1_cross.txt','w') as f_dot:
-    '''
-    with open('/home/linhb/CBAM/fig/f1_new/bpRNAnew/'+'CBAM.txt','w') as f_dot:
-        for f_i in f1_:
-          f_dot.write(str(f_i)+'\n')
-        f_dot.close()
-    '''
 
 def main():
     device  = 'cuda:1'
@@ -282,9 +244,8 @@ def main():
     #summary(contact_net, input_size=[(9,256,256)], batch_size=4, device="cpu")
     #print(a)
     for i in range(10,11):
-      MODEL_SAVED= '/home/linhb/CBAM/train_results/9_final/CBAM_train_'+str(i)+'.pt'
+      MODEL_SAVED= '/model/TrioFold.pt'
     #pdb.set_trace()
-      print(i)
 
       contact_net.load_state_dict(torch.load(MODEL_SAVED,map_location='cuda:1'))
 
