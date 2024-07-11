@@ -77,6 +77,10 @@ Subprocess
 collections  
 numpy  >= 1.23.5  
 
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 
 
