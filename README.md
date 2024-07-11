@@ -86,7 +86,7 @@ numpy  >= 1.23.5
 
 We provide a script for testing and evaluating the prediction result. By running the following code, you will obtain results consistent with those reported in the paper. After installation, please download dataset files from [Zenodo](https://zenodo.org/records/12714014), put them into the /data/ folder, and change the file name in the python script.  
   
-`test_data = RNASSDataGenerator('/data/','bpRNAnew.cPickle')`  
+`test_data = RNASSDataGenerator('/dataset/','bpRNAnew.cPickle')`  
   
 After the above procedure, just simply run   
   
