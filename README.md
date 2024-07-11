@@ -67,5 +67,18 @@ Moreover, we implemented TriFold and those base-learner methods in a one-stop us
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+<!-- Prerequisites -->
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+Python
+PyTorch
+Subprocess
+collections
+numpy
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 
 
