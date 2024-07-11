@@ -61,8 +61,9 @@ Here, we propose TrioFold to achieve enhanced generalizability of RSS prediction
 ## Webserver
 
 Moreover, we implemented TriFold and those base-learner methods in a one-stop user-friendly webserver to enable convenient usage for biologists without any programming requirement. The webserver provides RSS prediction and analysis functions and it can be freely accessed at [http://triofold.aiddlab.com/](http://triofold.aiddlab.com/).
-
-
+<p align="center">
+<img src="img/webserver.png" alt="Logo" width=600>
+</p>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
